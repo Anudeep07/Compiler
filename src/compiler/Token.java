@@ -13,4 +13,9 @@ public class Token {
         this.literal= literal;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "line " + line + " = lexeme: " + lexeme + " literal: " + literal + " type: " + type;
+    }
 }

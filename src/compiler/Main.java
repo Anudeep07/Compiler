@@ -14,18 +14,27 @@ public class Main {
 
         try {
             Scanner file = new Scanner(new File(args[0]));
-            file.useDelimiter(" ");
+            file.useDelimiter("\\Z");                       //end of file
 
             LexAnalyzer lex = new LexAnalyzer();
 
-            while(file.hasNext()) {
-                String lexeme = file.next();
-                lex.tokenize(lexeme);
+            String word = file.next();
+            boolean error = lex.tokenize(word);
+
+            if(!error) {
+                //parse
+            }
+
+            lex.addEOF();
+
+            for(Token token : lex.tokens) {
+                System.out.println(token);
             }
 
 
         } catch(FileNotFoundException f) {
-            f.printStackTrace();
+            System.err.println(args[0] + " couldn't be opened.");
+            System.exit(0);
         }
 
 

@@ -1,0 +1,10 @@
+package compiler;
+
+public enum TokenType {
+    LEFT_PARAN, RIGHT_PARAN, SEMICOLON, COMMA, QUOTE, COLON, PLUS, MINUS,
+
+    IDENTIFIER, LITERAL,
+
+    INT, MAIN, CHAR, SWITCH, BEGIN, CASE, PRINTF, BREAK,
+    END, RETURN
+}

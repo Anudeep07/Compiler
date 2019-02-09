@@ -18,8 +18,8 @@ public class Main {
 
             LexAnalyzer lex = new LexAnalyzer();
 
-            String word = file.next();
-            boolean error = lex.tokenize(word);
+            String source = file.next();
+            boolean error = lex.tokenize(source);
 
             if(!error) {
                 //parse
@@ -36,8 +36,6 @@ public class Main {
             System.err.println(args[0] + " couldn't be opened.");
             System.exit(0);
         }
-
-
     }
 
 }

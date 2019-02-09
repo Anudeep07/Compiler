@@ -37,10 +37,10 @@ public class LexAnalyzer {
     }
 
     //returns false if no error after lexical analysis
-    public boolean tokenize(String word) {
+    public boolean tokenize(String source) {
 
-        for(int i=0 ; i<word.length() ; i++) {
-            char c = word.charAt(i);
+        for(int i=0 ; i<source.length() ; i++) {
+            char c = source.charAt(i);
 
             switch(c) {
                 case '(':
@@ -73,21 +73,25 @@ public class LexAnalyzer {
 
                 case '\'':
 
-                    if(i+2 < word.length() && word.charAt(i+2) == '\'') {
-                        char betweenQuoteChar = word.charAt(i+1);
-
-                        if(betweenQuoteChar == '\'') {
-                            System.err.println("Expected character between quotes at line " + line);
-                            error = true;
-                        } else {
+                    if(i+2 < source.length() && source.charAt(i+2) == '\'') {
+                        char betweenQuoteChar = source.charAt(i+1);
                             tokens.add(new Token(line, "'" + betweenQuoteChar +"'", (int) betweenQuoteChar, TokenType.LITERAL ));
                             //update i to ending '
                             i += 2;
-                        }
+
 
                     } else {
-                        System.err.println("Expected ' at line " + line);
-                        error = true;
+
+                        if(i+1 < source.length() && source.charAt(i+1) == '\'') {
+                            System.err.println("Expected character between quotes at line " + line);
+                            error = true;
+                            i += 1;
+                        } else {
+                            System.err.println("Expected ' at line " + line);
+                            error = true;
+                        }
+
+
                     }
 
 
@@ -110,8 +114,8 @@ public class LexAnalyzer {
                         StringBuilder lexeme = new StringBuilder();
                         lexeme.append(c);
                         i++;
-                        for(; i<word.length() ; i++) {
-                            c = word.charAt(i);
+                        for(; i<source.length() ; i++) {
+                            c = source.charAt(i);
                             if(isalpha(c) || isdigit(c))
                                 lexeme.append(c);
                             else {
@@ -133,8 +137,8 @@ public class LexAnalyzer {
                         lexeme.append(c);
                         i++;
 
-                        for(; i<word.length() ; i++) {
-                            c = word.charAt(i);
+                        for(; i<source.length() ; i++) {
+                            c = source.charAt(i);
                             if(isdigit(c))
                                 lexeme.append(c);
                             else {
@@ -147,7 +151,7 @@ public class LexAnalyzer {
                         tokens.add(new Token(line, lex, Integer.parseInt(lex), TokenType.LITERAL));
 
                     } else {
-                        System.err.println("Error at line " + line);
+                        System.err.println("Error at line " + line + ": Undefined symbol " + c);
                         error = true;
                     }
             }

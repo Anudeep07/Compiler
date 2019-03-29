@@ -158,9 +158,4 @@ public class LexAnalyzer {
         }
         return error;
     }
-
-    public void addEOF(){
-        tokens.add(new Token(line, "", null, TokenType.EOF));
-    }
-
 }
